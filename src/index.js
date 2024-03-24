@@ -59,6 +59,23 @@ function App() {
         setIsModalOpen(false);
         setNewTaskTitle('');
     };
+
+    const handleSaveTasks = () => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        alert('Les tâches ont été sauvegardées avec succès !');
+    };
+    
+    
+    useEffect(() => {
+        const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
+        if (tasksFromLocalStorage && tasksFromLocalStorage.length > 0) {
+            const shouldLoadTasks = window.confirm('Des tâches existent déjà. Voulez-vous les charger ?');
+            if (shouldLoadTasks) {
+                setTasks(tasksFromLocalStorage);
+                setFilteredTasks(tasksFromLocalStorage);
+            }
+        }
+    }, []);
     
     const handleCheckTask = (taskId) => {
         const updatedTasks = tasks.map((task) => {
