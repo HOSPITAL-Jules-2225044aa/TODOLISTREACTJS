@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Modal from './components/Modal';
 import Task from './components/Task';
 import Categories from './components/Categories';
+import ReactDOM from 'react-dom';
 
 const CATEGORIES = [
     {
@@ -59,12 +60,11 @@ function App() {
         setIsModalOpen(false);
         setNewTaskTitle('');
     };
-
+    
     const handleSaveTasks = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         alert('Les tâches ont été sauvegardées avec succès !');
     };
-    
     
     useEffect(() => {
         const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
@@ -118,8 +118,17 @@ function App() {
         localStorage.removeItem('tasks');
     };
     
-    const handleSearchQueryChange = (e) => {
-        setSearchQuery(e.target.value);
+    const handleSearchQueryChange = (event) => {
+        setSearchQuery(event.target.value);
+        const filteredTasks = tasks.filter((task) => {
+            return task.title.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setFilteredTasks(filteredTasks);
+        if (searchQuery.length >= 3) {
+            document.getElementById("header").style.opacity = 0.5;
+        } else {
+            document.getElementById("header").style.opacity = 1;
+        }
     };
     
     return (
@@ -161,4 +170,4 @@ function App() {
             );
         }
         
-        export default App;
+        ReactDOM.render(<App />, document.getElementById('root'));
