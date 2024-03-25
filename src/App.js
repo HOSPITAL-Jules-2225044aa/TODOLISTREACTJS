@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function App() {
+export default function App() {
+    // ... component logic
     return (
-        <div>
-        <h1>Hello World!</h1>
-        </div>
+        // ... JSX code
         );
     }
-    
-    ReactDOM.render(<App />, document.getElementById('root'));
-    
